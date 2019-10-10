@@ -7,10 +7,10 @@
   "author": "Zane Kansil",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev --transpile-only src/index.ts"
+    "start": "ts-node --transpile-only src/index.ts"
   },
   "dependencies": {
-    "ts-node-dev": "^1.0.0-pre.43"
+    "ts-node": "^8.4.1"
   },
   "devDependencies": {
     "typescript": "^3.6.4"

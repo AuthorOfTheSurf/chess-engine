@@ -56,6 +56,8 @@ describe('Parser', () => {
         it('rejects illegal en passat captures', () => {
             expect(isSyntacticallyValidMove('Qxd6e.p.')).toEqual([false, 'Only pawns may capture en passat: "Q"']);
             expect(isSyntacticallyValidMove('exh9e.p.')).toEqual([false, 'Illegal destination: "h9"']);
+            expect(isSyntacticallyValidMove('exd6e.p.e.p.')).toEqual([false, 'Syntax error, illegal use of en passat designation: "exd6e.p.e.p."']);
+            expect(isSyntacticallyValidMove('ed6e.p.')).toEqual([false, `Syntax error, en passat must be a capture: "ed6e.p."`]);
         });
 
         it('accepts en passat captures', () => {

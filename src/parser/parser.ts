@@ -6,9 +6,10 @@ const RANKS = [1, 2, 3, 4, 5, 6, 7, 8];
 const SQUARES = flatMap(FILES, (file) => RANKS.map((rank) => file + rank));
 
 // Algebraic notation constants
-const LENGTH_OF_SQUARE = 2; // "e4"
-const CAPTURE = 'x';
-const PIECES = ['K', 'Q', 'B', 'N', 'R'];
+const LENGTH_OF_SQUARE: number = 2; // "e4"
+const CAPTURE: string = 'x';
+const PIECES: string[] = ['K', 'Q', 'B', 'N', 'R'];
+const EN_PASSAT: string = 'e.p.';
 
 /**
  * Return true IFF the given square is a square that exists on a standard chess board.
@@ -32,12 +33,30 @@ export function isSyntacticallyValidMove(move: string): [boolean, string] {
         if (squareIsValid) {
             return [true, null];
         } else {
-            return [false, `Illegal destination: "${move}"`]
+            return [false, `Illegal destination: "${move}"`];
         }
     }
 
     if (move.includes(CAPTURE) && move.split(CAPTURE).length > 2) {
         return [false, `Syntax error, illegal use of capture delimiter: "${move}"`];
+    } else if (move.includes(EN_PASSAT) && move.split(EN_PASSAT).length > 2) {
+        return [false, `Syntax error, illegal use of en passat designation: "${move}"`];
+    }
+
+    if (move.includes(EN_PASSAT) && move.includes(CAPTURE)) {
+        const strippedEnPassatMove: string = move.replace(EN_PASSAT, '');
+        const [piece, targetSquare]: string[] = strippedEnPassatMove.split(CAPTURE);
+        const pieceIsLegal: boolean = FILES.includes(piece);
+        const destinationIsLegal: boolean = isValidSquare(targetSquare);
+        if (!pieceIsLegal) {
+            return [false, `Only pawns may capture en passat: "${piece}"`];
+        } else if (!destinationIsLegal) {
+            return [false, `Illegal destination: "${targetSquare}"`];
+        } else {
+            return [true, null];
+        }
+    } else if (move.includes(EN_PASSAT) && !move.includes(CAPTURE)) {
+        return [false, `Syntax error, en passat must be a capture: "${move}"`];
     }
 
     if (move.includes(CAPTURE)) {

@@ -3,7 +3,7 @@ import { isValidSquare } from './parser';
 describe('Parser', () => {
     describe('#isValidSquare', () => {
         it('correctly identifies squares as outside of the board', () => {
-            expect(isValidSquare('z1')).toEqual(false);
+            expect(isValidSquare('z-1')).toEqual(false);
             expect(isValidSquare('h9')).toEqual(false);
             expect(isValidSquare('a0')).toEqual(false);
         });
@@ -13,7 +13,6 @@ describe('Parser', () => {
             expect(isValidSquare('h8')).toEqual(true);
         });
     });
-
 
     // describe('Pawn moves', (t) => {
     //     t.equals(isValidMove('e4'), [true, null], 'A legal pawn move');

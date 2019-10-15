@@ -1,9 +1,15 @@
+import { flatMap } from 'lodash';
+
+const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+const RANKS = [1, 2, 3, 4, 5, 6, 7, 8];
+const SQUARES = flatMap(FILES, (file) => RANKS.map((rank) => file + rank));
+
 /**
  * Return true IFF the given square is a square that exists on a standard chess board.
  * @param square A square in algebraic notation, e.g. "d4"
  */
 export function isValidSquare(square: string): boolean {
-    return false;
+    return SQUARES.includes(square);
 }
 
 /**

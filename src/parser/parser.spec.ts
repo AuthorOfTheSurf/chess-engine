@@ -21,8 +21,23 @@ describe('Parser', () => {
         });
 
         it('rejects impossible pawn moves with reason', () => {
-            expect(isSyntacticallyValidMove('e9')).toEqual([false, 'Target square invalid: "e9"']);
-            expect(isSyntacticallyValidMove('a0')).toEqual([false, 'Target square invalid: "a0"']);
+            expect(isSyntacticallyValidMove('e9')).toEqual([false, 'Illegal destination: "e9"']);
+            expect(isSyntacticallyValidMove('a0')).toEqual([false, 'Illegal destination: "a0"']);
+        });
+
+        it('rejects multiple usages of the capture delimiter', () => {
+            expect(isSyntacticallyValidMove('xxe5')).toEqual([false, 'Syntax error, illegal use of capture delimiter: "xxe5"']);
+            expect(isSyntacticallyValidMove('xXx')).toEqual([false, 'Syntax error, illegal use of capture delimiter: "xXx"']);
+        });
+
+        it('rejects illegal pieces on capturing moves', () => {
+            expect(isSyntacticallyValidMove('Zxd5')).toEqual([false, 'Illegal piece: "Z"']);
+            expect(isSyntacticallyValidMove('ixe5')).toEqual([false, 'Illegal piece: "i"']);
+        });
+
+        it('rejects illegal destinations on capturing moves', () => {
+            expect(isSyntacticallyValidMove('Rxj5')).toEqual([false, 'Illegal destination: "j5"']);
+            expect(isSyntacticallyValidMove('QxK5')).toEqual([false, 'Illegal destination: "K5"']);
         });
 
         it('accepts pawn moves that capture', () => {

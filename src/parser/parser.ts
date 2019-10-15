@@ -28,6 +28,9 @@ export function isValidSquare(square: string): boolean {
  * @param move A proposed chess move in chess notation, e.g. "Ne3"
  */
 export function isSyntacticallyValidMove(move: string): [boolean, string] {
+    const isCapture: boolean = move.includes(CAPTURE);
+    const isEnPassat: boolean = move.includes(EN_PASSAT);
+
     if (move.length === LENGTH_OF_SQUARE) {
         const squareIsValid = isValidSquare(move);
         if (squareIsValid) {
@@ -37,13 +40,13 @@ export function isSyntacticallyValidMove(move: string): [boolean, string] {
         }
     }
 
-    if (move.includes(CAPTURE) && move.split(CAPTURE).length > 2) {
+    if (isCapture && move.split(CAPTURE).length > 2) {
         return [false, `Syntax error, illegal use of capture delimiter: "${move}"`];
-    } else if (move.includes(EN_PASSAT) && move.split(EN_PASSAT).length > 2) {
+    } else if (isEnPassat && move.split(EN_PASSAT).length > 2) {
         return [false, `Syntax error, illegal use of en passat designation: "${move}"`];
     }
 
-    if (move.includes(EN_PASSAT) && move.includes(CAPTURE)) {
+    if (isEnPassat && isCapture) {
         const strippedEnPassatMove: string = move.replace(EN_PASSAT, '');
         const [piece, targetSquare]: string[] = strippedEnPassatMove.split(CAPTURE);
         const pieceIsLegal: boolean = FILES.includes(piece);
@@ -55,11 +58,11 @@ export function isSyntacticallyValidMove(move: string): [boolean, string] {
         } else {
             return [true, null];
         }
-    } else if (move.includes(EN_PASSAT) && !move.includes(CAPTURE)) {
+    } else if (isEnPassat && !isCapture) {
         return [false, `Syntax error, en passat must be a capture: "${move}"`];
     }
 
-    if (move.includes(CAPTURE)) {
+    if (isCapture) {
         const [piece, targetSquare]: string[] = move.split(CAPTURE);
         const pieceIsLegal: boolean = FILES.includes(piece) || PIECES.includes(piece);
         const destinationIsLegal: boolean = isValidSquare(targetSquare);

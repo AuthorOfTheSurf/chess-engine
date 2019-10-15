@@ -1,10 +1,13 @@
 import test from 'tape';
-import { isValidMove } from './parser';
+import { isValidMove, isValidSquare } from './parser';
 
 test('Parser', (t) => {
     test('Out of board moves', (t) => {
-        t.equals(isValidMove('z1'), [true, 'Invalid square: "z" is not a file'], 'An impossible move: outside of board');
-        t.equals(isValidMove('h9'), [true, 'Invalid square: "9" is not a rank'], 'An impossible move: outside of board');
+        t.equals(isValidSquare('z1'), false, 'An impossible move: outside of board');
+        t.equals(isValidSquare('h9'), false, 'An impossible move: outside of board');
+        t.equals(isValidSquare('a0'), false, 'An impossible move: outside of board');
+        t.equals(isValidSquare('e4'), true, 'A valid square');
+        t.equals(isValidSquare('h8'), true, 'A valid square');
         t.end();
     });
 

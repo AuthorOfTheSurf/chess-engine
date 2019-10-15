@@ -20,6 +20,6 @@ export function isValidSquare(square: string): boolean {
  *
  * @param move A proposed chess move in chess notation, e.g. "Ne3"
  */
-// export function isValidMove(move: string): [boolean, string] {
-//     return [false, ""];
-// }
+export function isSyntacticallyValidMove(move: string): [boolean, string] {
+    return [false, ""];
+}

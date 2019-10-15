@@ -1,4 +1,4 @@
-import { isValidSquare } from './parser';
+import { isSyntacticallyValidMove, isValidSquare } from './parser';
 
 describe('Parser', () => {
     describe('#isValidSquare', () => {
@@ -14,11 +14,10 @@ describe('Parser', () => {
         });
     });
 
-    // describe('Pawn moves', (t) => {
-    //     t.equals(isValidMove('e4'), [true, null], 'A legal pawn move');
-    //     t.equals(isValidMove('d4'), [true, null], 'A legal pawn move');
-    //     t.equals(isValidMove('exd5'), [true, null], 'Pawn on e-file captures the piece on d5');
-    //     t.equals(isValidMove('exd6e.p.'), [true, null], 'En passat capture by pawn on e-file on d-file. Capturing pawn ends up on d6');
-    //     t.end();
-    // });
+    describe('#isSyntacticallyValidMove', () => {
+        it('Affirms legal pawn moves', () => {
+            expect(isSyntacticallyValidMove('e4')).toEqual([true, null]);
+            expect(isSyntacticallyValidMove('a8')).toEqual([true, null]);
+        });
+    });
 });

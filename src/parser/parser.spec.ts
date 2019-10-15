@@ -53,6 +53,13 @@ describe('Parser', () => {
             expect(isSyntacticallyValidMove('Rxc7')).toEqual([true, null]);
         });
 
-        //     t.equals(isValidMove('exd6e.p.'), [true, null], 'En passat capture by pawn on e-file on d-file. Capturing pawn ends up on d6');
+        it('rejects illegal en passat captures', () => {
+            expect(isSyntacticallyValidMove('Qxd6e.p.')).toEqual([false, 'Only pawns may capture en passat: "Q"']);
+            expect(isSyntacticallyValidMove('exh9e.p.')).toEqual([false, 'Illegal destination: "h9"']);
+        });
+
+        it('accepts en passat captures', () => {
+            expect(isSyntacticallyValidMove('exd6e.p.')).toEqual([true, null]);
+        });
     });
 });

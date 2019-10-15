@@ -7,12 +7,18 @@
   "author": "Zane Kansil",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev --transpile-only src/index.ts"
+    "start": "ts-node --transpile-only src/index.ts",
+    "test": "jest"
   },
   "dependencies": {
-    "ts-node-dev": "^1.0.0-pre.43"
+    "lodash": "^4.17.15",
+    "ts-node": "^8.4.1"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "@types/lodash": "^4.14.144",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.4"
   }
 }
